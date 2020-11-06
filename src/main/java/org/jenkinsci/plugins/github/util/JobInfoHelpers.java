@@ -141,5 +141,19 @@ public final class JobInfoHelpers {
             }
         };
     }
+
+    /**
+     * Can be useful to ignore disabled jobs on reregistering hooks
+     *
+     * @return predicate with true on apply if item is buildable
+     */
+    public static <ITEM extends Item> Predicate<ITEM> isParentMultiBranch() {
+        return new Predicate<ITEM>() {
+            public boolean apply(ITEM item) {
+                return (item.getParent().getClass().getName() != "org.jenkinsci.plugins.workflow.multibranch"
+                                                                 + ".WorkflowMultiBranchProject");
+            }
+        };
+    }
 }
 
